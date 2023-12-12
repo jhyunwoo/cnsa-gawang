@@ -42,3 +42,21 @@ export async function PUT(request: Request) {
   });
   return NextResponse.json({ result: "SUCCESS", data: updateParticipant });
 }
+
+export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (session?.user.role !== "ADMIN")
+    return NextResponse.json({ result: "Access Denied", data: null });
+  const requestData = await request.json();
+
+  const { name, description }: { name: string; description: string } =
+    requestData;
+
+  const createParticipant = await prisma.participants.create({
+    data: {
+      name,
+      description,
+    },
+  });
+  return NextResponse.json({ result: "SUCCESS", data: createParticipant });
+}

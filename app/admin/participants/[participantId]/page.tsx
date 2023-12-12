@@ -1,16 +1,26 @@
-import { prisma } from "@/lib/prisma";
-import Link from "next/link";
+"use client";
 
-export default async function Participant({
+import { prisma } from "@/lib/prisma";
+import { loadingState } from "@/lib/recoil";
+import useParticipant from "@/lib/use-participant";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+
+export default function Participant({
   params,
 }: {
   params: { participantId: string };
 }) {
-  const participant = await prisma.participants.findUnique({
-    where: {
-      id: params.participantId,
-    },
-  });
+  const setLoading = useSetRecoilState(loadingState);
+  const { participant, participantLoading } = useParticipant(
+    params.participantId
+  );
+
+  useEffect(() => {
+    if (participantLoading) setLoading(true);
+    else setLoading(false);
+  }, [participantLoading, setLoading]);
 
   return (
     <div className="w-full min-h-screen flex flex-col p-4">

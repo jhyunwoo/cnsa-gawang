@@ -1,7 +1,12 @@
 "use client";
 
+import { loadingState } from "@/lib/recoil";
 import useParticipant from "@/lib/use-participant";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSetRecoilState } from "recoil";
 
 interface Inputs {
   name: string;
@@ -16,13 +21,18 @@ export default function EditParticipant({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const { participant } = useParticipant(params.participantId);
-  console.log(participant);
+  const { participant, participantLoading } = useParticipant(
+    params.participantId
+  );
+  const setLoading = useSetRecoilState(loadingState);
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setLoading(true);
     const updateParticipant = await fetch("/api/participant", {
       method: "PUT",
       body: JSON.stringify({
@@ -36,11 +46,33 @@ export default function EditParticipant({
       }
       return response.json() as Promise<{
         result: string;
-        data: object | null;
+        data: {
+          contentId: string | null;
+          description: string | null | undefined;
+          id: string;
+          name: string;
+        } | null;
       }>;
     });
-    console.log(updateParticipant);
+    if (updateParticipant.result === "SUCCESS")
+      router.push(`/admin/participants/${updateParticipant.data?.id}`);
+    else {
+      alert("참가자 수정에 실패했습니다.");
+    }
+    setLoading(false);
   };
+
+  useEffect(() => {
+    if (participant) {
+      setValue("name", participant.name);
+      setValue("description", participant.description);
+    }
+  }, [participant, setValue]);
+
+  useEffect(() => {
+    if (participantLoading) setLoading(true);
+    else setLoading(false);
+  }, [participantLoading, setLoading]);
 
   return (
     <div className="w-full min-h-screen p-4 flex flex-col">
@@ -53,6 +85,9 @@ export default function EditParticipant({
             required: { value: true, message: "이름을 입력해주세요." },
           })}
         />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.name.message}</p>
+        )}
         <div className="mt-2 text-lg">설명</div>
         <textarea
           className="p-2 rounded-md outline-none mt-1 ring-sky-300 ring-2 focus:ring-sky-500 transition duration-150"

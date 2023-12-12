@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import RecoilProvider from "@/components/recoil-provider";
+import AuthProvider from "@/components/auth-provider";
+import Loading from "@/components/loading";
 
 export const metadata: Metadata = {
   title: "큰사가왕",
@@ -13,7 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="bg-slate-50">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          <RecoilProvider>
+            {children}
+            <Loading />
+          </RecoilProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

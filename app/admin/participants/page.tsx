@@ -14,7 +14,7 @@ export default async function Participants() {
             className="flex flex-col p-2 px-3 bg-white rounded-md ring-2 ring-sky-300 hover:bg-sky-50 transition duration-150"
           >
             <h2 className="text-lg">{data.name}</h2>
-            <p className="text-slate-700">{data.description}</p>
+            <p className="text-slate-700 text-sm">{data.description}</p>
           </Link>
         ))}
         <Link
