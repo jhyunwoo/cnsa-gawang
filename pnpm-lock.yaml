@@ -37,6 +37,9 @@ dependencies:
     version: 2.2.4(react@18.2.0)
 
 devDependencies:
+  '@tailwindcss/aspect-ratio':
+    specifier: ^0.4.2
+    version: 0.4.2(tailwindcss@3.3.6)
   '@types/node':
     specifier: ^20
     version: 20.10.4
@@ -374,6 +377,14 @@ packages:
     dependencies:
       tslib: 2.6.2
     dev: false
+
+  /@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.3.6):
+    resolution: {integrity: sha512-8QPrypskfBa7QIMuKHg2TA7BqES6vhBrDLOv8Unb6FcFyd3TjKbc6lcmb9UPQHxfl24sXoJ41ux/H7qQQvfaSQ==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: 3.3.6
+    dev: true
 
   /@types/cookie@0.6.0:
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}

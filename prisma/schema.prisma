@@ -66,27 +66,38 @@ model VerificationToken {
 }
 
 model Contest {
-  id           String         @id @default(cuid())
-  participants Participants[]
+  id           String                  @id @default(cuid())
   votes        Vote[]
+  show         Boolean                 @default(false)
+  created      DateTime                @default(now())
+  participants ContestOnParticipants[]
 }
 
-model Vote {
-  id            String       @id @default(cuid())
-  contest       Contest?     @relation(fields: [contestId], references: [id])
-  contestId     String?
-  user          User         @relation(fields: [userId], references: [id])
-  userId        String
-  created       DateTime     @default(now())
-  participant   Participants @relation(fields: [participantId], references: [id])
-  participantId String
+model ContestOnParticipants {
+  contest        Contest      @relation(fields: [contestId], references: [id])
+  contestId      String
+  participants   Participants @relation(fields: [participantsId], references: [id])
+  participantsId String
+
+  @@id([contestId, participantsId])
 }
 
 model Participants {
-  id          String   @id @default(cuid())
+  id          String                  @id @default(cuid())
   name        String
   description String?
-  Contest     Contest? @relation(fields: [contestId], references: [id])
   contestId   String?
-  Vote        Vote[]
+  vote        Vote[]
+  contests    ContestOnParticipants[]
+}
+
+model Vote {
+  id            String        @id @default(cuid())
+  contest       Contest?      @relation(fields: [contestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  contestId     String?
+  user          User?         @relation(fields: [userId], references: [id])
+  userId        String?
+  created       DateTime      @default(now())
+  participant   Participants? @relation(fields: [participantId], references: [id])
+  participantId String?
 }

@@ -1,32 +1,43 @@
-import { prisma } from "@/lib/prisma";
-import Link from "next/link";
+"use client";
 
-export default async function AdminVote() {
-  const contests = await prisma.contest.findMany({
-    include: { participants: true },
-  });
+import { loadingState } from "@/lib/recoil";
+import useContests from "@/lib/use-contests";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+
+export default function AdminVote() {
+  const setLoading = useSetRecoilState(loadingState);
+  const { contests, contestsLoading } = useContests();
+
+  useEffect(() => {
+    if (contestsLoading) setLoading(true);
+    else setLoading(false);
+  }, [contestsLoading, setLoading]);
 
   return (
     <div className="w-full min-h-screen flex flex-col p-4">
       <h1 className="text-xl font-bold">투표</h1>
       <div className="grid grid-cols-1 gap-2 mt-4 w-full">
-        {contests.map((data) => (
+        {contests?.map((data) => (
           <Link
-            href={`/admin/vote/${data.id}`}
-            key={data.id}
-            className="flex bg-white p-2 px-3 rounded-md font-semibold ring-1 ring-slate-500"
+            href={`/admin/vote/${data?.id}`}
+            key={data?.id}
+            className={`flex bg-white p-2 px-3 rounded-md font-semibold ring-2 ${
+              data.show ? "ring-green-500" : "ring-red-500"
+            }`}
           >
-            {data.participants.map((participants, index) => (
-              <div key={participants.id} className="mr-1">
-                {participants.name}
-                {index + 1 !== data.participants.length ? " vs" : ""}
+            {data?.participants.map((participants, index) => (
+              <div key={participants.participantsId} className="mr-1">
+                {participants.participants?.name}
+                {index + 1 !== data?.participants?.length ? " vs" : ""}
               </div>
             ))}
           </Link>
         ))}
         <Link
           href={"/admin/vote/create"}
-          className="text-center p-3 px-4 rounded-md bg-slate-800 text-white font-semibold hover:bg-slate-700 transition duration-150"
+          className="text-center p-3 px-4 rounded-lg bg-sky-800 text-white font-semibold hover:bg-sky-700 transition duration-150"
         >
           투표 생성
         </Link>

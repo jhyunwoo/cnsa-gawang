@@ -1,13 +1,24 @@
-import { prisma } from "@/lib/prisma";
+"use client";
+import { loadingState } from "@/lib/recoil";
+import useParticipants from "@/lib/use-participants";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 
-export default async function Participants() {
-  const participants = await prisma.participants.findMany();
+export default function Participants() {
+  const { participants, participantsLoading } = useParticipants();
+  const setLoading = useSetRecoilState(loadingState);
+
+  useEffect(() => {
+    if (participantsLoading) setLoading(true);
+    else setLoading(false);
+  }, [participantsLoading, setLoading]);
+
   return (
     <div className="w-full min-h-screen p-4 flex flex-col">
       <h1 className="text-xl font-semibold">참가자 관리</h1>
       <div className="w-full grid grid-cols-1 gap-2 mt-4">
-        {participants.map((data) => (
+        {participants?.map((data) => (
           <Link
             href={`/admin/participants/${data.id}`}
             key={data.id}
