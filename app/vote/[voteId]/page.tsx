@@ -29,6 +29,9 @@ export default function Vote({ params }: { params: { voteId: string } }) {
       }>;
     });
     if (createVote.result === "ALREADY VOTED") alert("이미 투표하셨습니다.");
+    else {
+      alert("투표 완료");
+    }
     router.push("/vote");
     setLoading(false);
   }
@@ -52,7 +55,7 @@ export default function Vote({ params }: { params: { voteId: string } }) {
             key={data.id}
             type="button"
             onClick={() => vote(data.id)}
-            className={`p-2 w-full aspect-1 bg-green-500 text-lg font-semibold text-white rounded-lg ${colors[index]}`}
+            className={`p-2 w-full aspect-1 text-lg font-semibold text-white rounded-lg ${colors[index]}`}
           >
             {data.name}
           </button>

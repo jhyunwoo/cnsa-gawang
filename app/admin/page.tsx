@@ -17,6 +17,12 @@ export default function Admin() {
         >
           투표 관리
         </Link>
+        <Link
+          className="bg-white text-center py-4 rounded-md font-semibold text-lg hover:bg-sky-100 transition duration-150 px-3 ring-2 ring-sky-500"
+          href={"/admin/voters"}
+        >
+          투표자 관리
+        </Link>
       </div>
     </div>
   );

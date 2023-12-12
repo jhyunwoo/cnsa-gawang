@@ -41,6 +41,7 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
+  studentId     Int?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
@@ -74,9 +75,9 @@ model Contest {
 }
 
 model ContestOnParticipants {
-  contest        Contest      @relation(fields: [contestId], references: [id])
+  contest        Contest      @relation(fields: [contestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contestId      String
-  participants   Participants @relation(fields: [participantsId], references: [id])
+  participants   Participants @relation(fields: [participantsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   participantsId String
 
   @@id([contestId, participantsId])
@@ -95,9 +96,9 @@ model Vote {
   id            String        @id @default(cuid())
   contest       Contest?      @relation(fields: [contestId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contestId     String?
-  user          User?         @relation(fields: [userId], references: [id])
+  user          User?         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId        String?
   created       DateTime      @default(now())
-  participant   Participants? @relation(fields: [participantId], references: [id])
+  participant   Participants? @relation(fields: [participantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   participantId String?
 }

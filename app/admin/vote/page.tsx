@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/back-button";
 import { loadingState } from "@/lib/recoil";
 import useContests from "@/lib/use-contests";
 import Link from "next/link";
@@ -17,6 +18,7 @@ export default function AdminVote() {
 
   return (
     <div className="w-full min-h-screen flex flex-col p-4">
+      <BackButton href="/admin">관리자 페이지</BackButton>
       <h1 className="text-xl font-bold">투표</h1>
       <div className="grid grid-cols-1 gap-2 mt-4 w-full">
         {contests?.map((data) => (

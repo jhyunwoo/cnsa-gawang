@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/back-button";
 import { loadingState } from "@/lib/recoil";
 import useContest from "@/lib/use-contest";
 import Link from "next/link";
@@ -58,6 +59,7 @@ export default function Contest({ params }: { params: { contestId: string } }) {
 
   return (
     <div className="w-full min-h-screen flex flex-col p-4">
+      <BackButton href="/admin/vote">투표 관리</BackButton>
       <h1 className="text-xl font-bold">
         투표 관리 |{" "}
         {contest?.participants?.map((data, index) => {

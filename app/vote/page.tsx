@@ -22,19 +22,19 @@ export default function Vote() {
         <div className="flex flex-col space-y-2 w-full items-center">
           {votes?.map((vote) => (
             <Link
-              key={vote.id}
-              href={`/vote/${vote.id}`}
+              key={vote?.id}
+              href={`/vote/${vote?.id}`}
               className="w-full p-2 rounded-lg text-center max-w-sm bg-sky-400 text-white font-semibold text-lg"
             >
               {vote.participants.map((data) => {
                 if (
-                  data.participants.id ===
-                  vote.participants[vote.participants.length - 1].participants
-                    .id
+                  data?.participants?.id ===
+                  vote?.participants[vote?.participants?.length - 1]
+                    .participants?.id
                 ) {
-                  return data.participants.name;
+                  return data.participants?.name;
                 }
-                return data.participants.name + " vs ";
+                return data?.participants?.name + " vs ";
               })}
             </Link>
           ))}

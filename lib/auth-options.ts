@@ -3,6 +3,24 @@ import { NextAuthOptions } from "next-auth";
 import KakaoProvider from "next-auth/providers/kakao";
 import { prisma } from "./prisma";
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id?: string | null | undefined;
+      role?: string | null | undefined;
+      created?: string | null | undefined;
+      name?: string | null | undefined;
+      email?: string | null | undefined;
+      studentId?: number | null | undefined;
+    };
+  }
+  interface User {
+    plan?: string | null | undefined;
+    created?: string | null | undefined;
+    studentId?: number | null | undefined;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -18,6 +36,7 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
         role: user.role,
         created: user.created,
+        studentId: user.studentId,
       };
       return session;
     },

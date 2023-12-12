@@ -8,6 +8,7 @@ export async function GET() {
   if (session?.user.role !== "ADMIN") {
     return NextResponse.json({ result: "Access denied" });
   }
+
   const contests = await prisma.contest.findMany({
     include: {
       participants: {
@@ -15,6 +16,9 @@ export async function GET() {
           participants: true,
         },
       },
+    },
+    orderBy: {
+      created: "desc",
     },
   });
   return NextResponse.json(contests);

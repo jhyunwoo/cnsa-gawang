@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/back-button";
 import { loadingState } from "@/lib/recoil";
 import useParticipants from "@/lib/use-participants";
 import { useRouter } from "next/navigation";
@@ -54,6 +55,7 @@ export default function CreateVote() {
 
   return (
     <div className="w-full min-h-screen flex flex-col p-4">
+      <BackButton href="/admin/vote">투표 관리</BackButton>
       <h1 className="text-xl font-bold">투표 생성</h1>
       <div className="mt-4">
         <h2 className="text-lg text-slate-700 border-b-2">참가자 선택</h2>

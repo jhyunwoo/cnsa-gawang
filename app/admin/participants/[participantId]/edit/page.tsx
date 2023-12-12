@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/back-button";
 import { loadingState } from "@/lib/recoil";
 import useParticipant from "@/lib/use-participant";
 import { redirect } from "next/navigation";
@@ -65,7 +66,10 @@ export default function EditParticipant({
   useEffect(() => {
     if (participant) {
       setValue("name", participant.name);
-      setValue("description", participant.description);
+      setValue(
+        "description",
+        participant.description ? participant.description : ""
+      );
     }
   }, [participant, setValue]);
 
@@ -76,6 +80,9 @@ export default function EditParticipant({
 
   return (
     <div className="w-full min-h-screen p-4 flex flex-col">
+      <BackButton href={`/admin/participants/${params.participantId}`}>
+        참가자 관리 - {participant?.name}
+      </BackButton>
       <h1 className="text-xl font-bold">참가자 수정</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  mt-4">
         <div className="mt-2 text-lg">이름</div>

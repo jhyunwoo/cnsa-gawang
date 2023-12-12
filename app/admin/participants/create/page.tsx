@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/back-button";
 import { loadingState } from "@/lib/recoil";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -48,6 +49,8 @@ export default function CreateParticipant() {
 
   return (
     <div className="w-full min-h-screen flex flex-col p-4">
+      <BackButton href="/admin/participants">참가자 관리</BackButton>
+
       <h1 className="text-xl font-bold">참가자 추가</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  mt-4">
         <div className="mt-2 text-lg">이름</div>
