@@ -1,12 +1,9 @@
-"use client";
-
 import SignOutButton from "@/components/signout-button";
-import { loadingState } from "@/lib/recoil";
-import useVotes from "@/lib/use-votes";
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import ReloadVotes from "./reload-votes";
+import { prisma } from "@/lib/prisma";
+
+export const revalidate = 0;
 
 const colors = [
   "bg-sky-500",
@@ -22,21 +19,19 @@ const colors = [
   "bg-teal-500",
 ];
 
-export default function Vote() {
-  const { votes, votesLoading, votesMutate } = useVotes();
-  const [reload, setReload] = useState(false);
-  const setLoading = useSetRecoilState(loadingState);
-
-  function reloadVotes() {
-    setReload(true);
-    votesMutate();
-    setTimeout(() => setReload(false), 1000);
-  }
-
-  useEffect(() => {
-    if (votesLoading) setLoading(true);
-    else setLoading(false);
-  }, [votesLoading, setLoading]);
+export default async function Vote() {
+  const votes = await prisma.contest.findMany({
+    where: {
+      show: true,
+    },
+    include: {
+      participants: {
+        include: {
+          participants: true,
+        },
+      },
+    },
+  });
 
   return (
     <div className="w-full h-screen flex items-center justify-center flex-col p-4">
@@ -61,17 +56,10 @@ export default function Vote() {
               })}
             </Link>
           ))}
-          <button
-            type="button"
-            className="p-2 w-full max-w-sm bg-slate-500 text-white hover:bg-slate-500 transition duration-150 rounded-lg flex items-center justify-center"
-            onClick={reloadVotes}
-          >
-            {reload ? (
-              <ArrowPathIcon className="w-6 h-6 animate-spin text-slate-100" />
-            ) : (
-              "새로고침"
-            )}
-          </button>
+          <ReloadVotes />
+          <p className="text-sm text-slate-900">
+            투표가 보이지 않을 경우 새로고침 해주세요.
+          </p>
         </div>
       </div>
       <SignOutButton className="text-sm text-red-500 p-4 hover:underline decoration-red-500">
