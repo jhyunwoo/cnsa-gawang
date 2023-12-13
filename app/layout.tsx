@@ -3,6 +3,7 @@ import "./globals.css";
 import RecoilProvider from "@/components/recoil-provider";
 import AuthProvider from "@/components/auth-provider";
 import Loading from "@/components/loading";
+import { Analytics } from "@vercel/analytics/react";
 import { ReactNode } from "react";
 
 export const viewport = {
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" className="bg-slate-50">
       <body>
+        <Analytics />
         <AuthProvider>
           <RecoilProvider>
             {children}
