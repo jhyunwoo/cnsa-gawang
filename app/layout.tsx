@@ -15,11 +15,11 @@ export const viewport = {
 export const metadata: Metadata = {
   applicationName: "큰사가왕 투표",
   title: "큰사가왕 투표",
-  description: "2024 큰사가왕 온라인 투표",
+  description: "2023 큰사가왕 온라인 투표",
   metadataBase: new URL("https://cnsagawang.moveto.kr"),
   openGraph: {
     title: "큰사가왕 투표",
-    description: "2024 큰사가왕 온라인 투표",
+    description: "2023 큰사가왕 온라인 투표",
     images: ["/og-image.png"],
   },
 };
