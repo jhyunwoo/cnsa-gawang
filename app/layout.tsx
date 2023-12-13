@@ -3,17 +3,28 @@ import "./globals.css";
 import RecoilProvider from "@/components/recoil-provider";
 import AuthProvider from "@/components/auth-provider";
 import Loading from "@/components/loading";
+import { ReactNode } from "react";
 
-export const metadata: Metadata = {
-  title: "큰사가왕",
-  description: "충남삼성고 큰사가왕 투표",
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+  ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const metadata: Metadata = {
+  applicationName: "큰사가왕 투표",
+  title: "큰사가왕 투표",
+  description: "2024 큰사가왕 온라인 투표",
+  metadataBase: new URL("https://cnsagawang.moveto.kr"),
+  openGraph: {
+    title: "큰사가왕 투표",
+    description: "2024 큰사가왕 온라인 투표",
+    images: ["/og-image.png"],
+  },
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" className="bg-slate-50">
       <body>

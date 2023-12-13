@@ -3,7 +3,7 @@
 import SignOutButton from "@/components/signout-button";
 import { loadingState } from "@/lib/recoil";
 import useVotes from "@/lib/use-votes";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
@@ -53,7 +53,7 @@ export default function Vote() {
             onClick={reloadVotes}
           >
             {reload ? (
-              <Cog6ToothIcon className="w-6 h-6 animate-spin text-slate-100" />
+              <ArrowPathIcon className="w-6 h-6 animate-spin text-slate-100" />
             ) : (
               "새로고침"
             )}
