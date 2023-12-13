@@ -20,7 +20,7 @@ export default function AdminVote() {
     <div className="w-full min-h-screen flex flex-col p-4">
       <BackButton href="/admin">관리자 페이지</BackButton>
       <h1 className="text-xl font-bold">투표</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-4 w-full">
         {contests?.map((data) => (
           <Link
             href={`/admin/vote/${data?.id}`}
