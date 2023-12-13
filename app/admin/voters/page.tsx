@@ -34,7 +34,10 @@ export default function Voters() {
               priority
               className="rounded-full"
             />
-            <p className="text-lg">{data.name}</p>
+            <div className="flex flex-col">
+              <p className="text-lg">{data?.name}</p>
+              <p className="text-sm">학번: {data?.studentId}</p>
+            </div>
           </div>
         ))}
       </div>

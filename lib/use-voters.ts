@@ -12,6 +12,7 @@ export default function useVoters() {
       image: string | null;
       name: string | null;
       role: "ADMIN" | "USER" | "BANNED";
+      studentId: number | null;
     }[]
   >(`/api/voters`, fetcher);
   return {

@@ -49,7 +49,7 @@ export default function Vote({ params }: { params: { voteId: string } }) {
           })}
         </div>
       </div>
-      <div className="w-full flex items-center justify-center mt-4 space-x-2 fixed bottom-4 px-4">
+      <div className="w-full flex items-center justify-center mt-4 space-x-2 fixed bottom-4 px-4 max-w-md">
         {participants?.map((data, index) => (
           <button
             key={data.id}

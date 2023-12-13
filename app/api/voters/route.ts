@@ -8,6 +8,10 @@ export async function GET() {
   if (session?.user.role !== "ADMIN")
     return NextResponse.json({ result: "ACCESS DENIED" }, { status: 401 });
 
-  const voters = await prisma.user.findMany();
+  const voters = await prisma.user.findMany({
+    orderBy: {
+      studentId: "asc",
+    },
+  });
   return NextResponse.json(voters);
 }

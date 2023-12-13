@@ -39,7 +39,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
-  if (!session?.user.id) return NextResponse.json({ request: "ACCESS DENIED" });
+  if (!session?.user.id)
+    return NextResponse.json({ request: "ACCESS DENIED" }, { status: 401 });
 
   const requestData = await request.json();
   const { voteId, participantId }: { voteId: string; participantId: string } =
