@@ -1,14 +1,23 @@
 "use client";
 
+import SignOutButton from "@/components/signout-button";
 import { loadingState } from "@/lib/recoil";
 import useVotes from "@/lib/use-votes";
+import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 export default function Vote() {
-  const { votes, votesLoading } = useVotes();
+  const { votes, votesLoading, votesMutate } = useVotes();
+  const [reload, setReload] = useState(false);
   const setLoading = useSetRecoilState(loadingState);
+
+  function reloadVotes() {
+    setReload(true);
+    votesMutate();
+    setTimeout(() => setReload(false), 1000);
+  }
 
   useEffect(() => {
     if (votesLoading) setLoading(true);
@@ -24,7 +33,7 @@ export default function Vote() {
             <Link
               key={vote?.id}
               href={`/vote/${vote?.id}`}
-              className="w-full p-2 rounded-lg text-center max-w-sm bg-sky-400 text-white font-semibold text-lg"
+              className="w-full p-2 rounded-lg text-center max-w-sm bg-sky-400 hover:bg-sky-500 transition duration-150 text-white font-semibold text-lg"
             >
               {vote.participants.map((data) => {
                 if (
@@ -38,8 +47,22 @@ export default function Vote() {
               })}
             </Link>
           ))}
+          <button
+            type="button"
+            className="p-2 w-full max-w-sm bg-slate-400 text-white hover:bg-slate-500 transition duration-150 rounded-lg flex items-center justify-center"
+            onClick={reloadVotes}
+          >
+            {reload ? (
+              <Cog6ToothIcon className="w-6 h-6 animate-spin text-slate-100" />
+            ) : (
+              "새로고침"
+            )}
+          </button>
         </div>
       </div>
+      <SignOutButton className="text-sm text-red-500 p-4 hover:underline decoration-red-500">
+        로그아웃
+      </SignOutButton>
     </div>
   );
 }

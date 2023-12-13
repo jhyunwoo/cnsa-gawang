@@ -26,7 +26,6 @@ export default function Participant({
   return (
     <div className="w-full min-h-screen flex flex-col p-4">
       <BackButton href="/admin/participants">참가자 관리</BackButton>
-
       <h1 className="font-bold text-xl">참가자 관리 - {participant?.name}</h1>
       <div className="mt-4 flex flex-col">
         <div>이름: {participant?.name}</div>

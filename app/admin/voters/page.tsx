@@ -20,7 +20,7 @@ export default function Voters() {
     <div className="w-full min-h-screen flex flex-col p-4">
       <BackButton href="/admin">관리자 페이지</BackButton>
       <h1 className="text-xl font-bold">투표자 관리</h1>
-      <div className="mt-4 flex flex-col space-y-2">
+      <div className="mt-4 grid grid-cols1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {voters?.map((data) => (
           <div
             key={data.id}
@@ -35,7 +35,7 @@ export default function Voters() {
               className="rounded-full"
             />
             <div className="flex flex-col">
-              <p className="text-lg">{data?.name}</p>
+              <p className="text-lg font-semibold">{data?.name}</p>
               <p className="text-sm">학번: {data?.studentId}</p>
             </div>
           </div>

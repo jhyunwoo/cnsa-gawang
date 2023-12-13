@@ -19,7 +19,7 @@ export default function Participants() {
     <div className="w-full min-h-screen p-4 flex flex-col">
       <BackButton href="/admin">관리자 페이지</BackButton>
       <h1 className="text-xl font-semibold">참가자 관리</h1>
-      <div className="w-full grid grid-cols-1 gap-2 mt-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-4">
         {participants?.map((data) => (
           <Link
             href={`/admin/participants/${data.id}`}

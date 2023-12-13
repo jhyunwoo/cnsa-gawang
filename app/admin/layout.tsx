@@ -10,7 +10,9 @@ export default async function AdminLayout({
 }): Promise<ReactElement> {
   const session = await getServerSession(authOptions);
 
-  if (session?.user.role !== "ADMIN") redirect("/");
+  if (session?.user?.role !== "ADMIN") redirect("/");
 
-  return <>{children}</>;
+  return (
+    <div className="mx-auto w-full max-w-7xl flex flex-col">{children}</div>
+  );
 }
