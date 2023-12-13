@@ -46,3 +46,17 @@ export async function POST(request: Request) {
   });
   return NextResponse.json({ result: "SUCCESS", data: createContest });
 }
+
+export async function DELETE(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (session?.user.role !== "ADMIN")
+    return NextResponse.json({ result: "Access Denied" });
+  const requestData = await request.json();
+  const { id }: { id: string } = requestData;
+  await prisma.contest.delete({
+    where: {
+      id: id,
+    },
+  });
+  return NextResponse.json({ result: "SUCCESS" });
+}
